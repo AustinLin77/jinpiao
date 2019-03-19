@@ -1,5 +1,6 @@
 <template>
-    <div style="height: 100%;overflow: hidden" id="company">
+
+    <div style="height: 100%;" id="company">
        <yd-navbar title="企业用户" bgcolor="#789CF8" color="#FFFFFF">
          <router-link  slot="left" to="/appliance">
            <yd-navbar-back-icon ></yd-navbar-back-icon>
@@ -7,7 +8,6 @@
          <yd-icon name="more" size="25px" color="#777" slot="right" @click.native="openAdd"></yd-icon>
        </yd-navbar>
        <div class="head" style="z-index: 9999"></div>
-
       <div class="card">
         <div class="selectItem"  >
           <span :class="{'active': type==0}"  @click="changeStatus(0)">经办人</span>
@@ -16,36 +16,27 @@
           <span :class="{'active': type==1}" @click="changeStatus(1)">审核人</span>
         </div>
       </div>
-      <div class="content" >
-        <div class="listBorder">
-          <yd-cell-group v-for="i in list" @click.native="goDetail(i)" :key="i">
+      <div  class="listBorder">
+        <yd-infinitescroll :callback="loadList1" ref="infinitescrollDemo" >
+          <!--<div class="content"  slot="list">-->
+          <!--<div  slot="list" >-->
+          <yd-cell-group v-for="i,index in list" @click.native="goDetail(i)" :key="index" slot="list">
             <yd-cell-item arrow>
               <div slot="left" style="padding: 0.2rem;font-size: 0.28rem">
-                <div class="itemName"><span >用户名</span><span >欣旺达</span></div>
-                <div class="itemName"><span >电话</span><span >18815154545</span></div>
-                <div class="itemName"><span >邮箱</span><span >188485484@sunwoda.com</span></div>
+                <div class="itemName"><span >用户名</span><span >{{i.username}}</span></div>
+                <div class="itemName"><span >电话</span><span >{{i.telephone}}</span></div>
+                <div class="itemName"><span >邮箱</span><span >{{i.email}}</span></div>
               </div>
               <div slot="right"></div>
             </yd-cell-item>
           </yd-cell-group>
-        </div>
+          <!--</div>-->
+          <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+          <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
+        </yd-infinitescroll>
+      </div>
 
-      </div >
-      <!--<div class="content" v-if="type==1">-->
-        <!--<div class="listBorder">-->
-          <!--<yd-cell-group v-for="i in list2" >-->
-            <!--<yd-cell-item arrow>-->
-              <!--<div slot="left" style="padding: 0.2rem">-->
-                <!--<div class="itemName"><span >用户名</span><span >欣旺达</span></div>-->
-                <!--<div class="itemName"><span >电话</span><span >18815154545</span></div>-->
-                <!--<div class="itemName"><span >邮箱</span><span >188485484@sunwoda.com</span></div>-->
-              <!--</div>-->
-              <!--<div slot="right"></div>-->
-            <!--</yd-cell-item>-->
-          <!--</yd-cell-group>-->
-        <!--</div>-->
 
-      <!--</div >-->
       <div class="popover" v-if="showTool">
         <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="add(0)">
           <img src="../../../../../assets/iconImg/add.png" class="rightIcon">
@@ -63,29 +54,35 @@
     export default {
         data: function () {
             return {
+              pageNum:1,
+              pageSize:4,
               showTool:false,
               type:0,
               list:[],
-              list1:[1,2,3,4],
-              list2:[1,2]
             }
         },
         created() {
 
         },
         mounted() {
-          this.list=this.list1
+//          this.$router.push({path:'/test'});
+          this.getData(1)
         },
         methods: {
           //改变操作用户状态
           changeStatus(type){
+            console.log(this.$refs.infinitescrollDemo)
+            this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.reInit');
+            this.pageNum=1;
+            this.list=[];
               if(type===0){
                 this.type=0;
-                this.list=this.list1
+                this.getData(1)
               }else{
                 this.type=1;
-                this.list=this.list2
+                this.getData(2)
               }
+
             },
           //点击进入详情页面
           goDetail(item){
@@ -109,6 +106,43 @@
                 type:type
               }
             })
+          },
+          getData(type){
+            let vm = this;
+            let url='clcp/app/query/user?roleType='+type+"&pageSize="+this.pageSize+"&pageNum="+this.pageNum;
+            let params={
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId": localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'get',url,params,function (res) {
+              console.log(res);
+              for(var i in res.data){
+                vm.list.push(res.data[i]);
+              }
+              console.log(vm.list.length)
+              console.log(res.total)
+              if(vm.list.length>=res.total){
+                vm.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
+                return;
+              }
+              vm.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
+              vm.pageNum++
+            })
+          },
+          loadList1(){
+            console.log(this.$refs.infinitescrollDemo)
+            if(this.type==0){
+              this.getData(1)
+            }else{
+              this.getData(2)
+            }
+
           }
         }
 
@@ -142,11 +176,13 @@
     /*background: linear-gradient(left top, #789CF8,#4363EE);*/
 
   /*}*/
+
   .itemName{
     height: 0.8rem;
     line-height:0.8rem;
     font-size: 0.28rem;
   }
+
   .card{
     margin-left: 0.6rem;
     width: calc(100% - 1.2rem);
@@ -183,27 +219,46 @@
   .active{
     border-bottom: 5px solid #FFAF00  ;
   }
-  .content{
+  /*.content{*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*top:2.32rem;*/
+    /*left: 0;*/
+    /*!*height:100%;*!*/
+    /*padding-top: 1rem;*/
+    /*padding-left: 5%;*/
+    /*padding-right: 5%;*/
+    /*height: calc(100% - 2.32rem);*/
+    /*width: 100%;*/
+    /*overflow: scroll;*/
+    /*z-index: 5;*/
+    /*!*margin-top: -0.8rem;*!*/
+  /*}*/
+  .listBorder{
+    position: absolute;
+    bottom: 0;
+    top:2.32rem;
+    left: 0;
+    /*height:100%;*/
+    padding-top: 1rem;
+    padding-left: 5%;
+    padding-right: 5%;
     height: calc(100% - 2.32rem);
     width: 100%;
     overflow: scroll;
     z-index: 5;
-    transition: all 0.6s linear;
-    /*margin-top: -0.8rem;*/
-  }
-  .listBorder{
-    margin-top: 1rem;
-    margin-left: 5%;
-    margin-right: 5%;
+    /*margin-top: 1rem;*/
+    /*margin-left: 5%;*/
+    /*margin-right: 5%;*/
     /*overflow: scroll;*/
     /*height: calc(100% - 1rem);*/
   }
-  .listBorder .yd-cell-box{
-    margin-bottom: 0.5rem;
-  }
-  .tran{
-    transition: all 0.6s linear;
-  }
+  /*.listBorder .yd-cell-box{*/
+    /*margin-bottom: 0.5rem;*/
+  /*}*/
+  /*.tran{*/
+    /*transition: all 0.6s linear;*/
+  /*}*/
   .popover{
     border: solid 1px #2A2A2A;
     position: fixed;

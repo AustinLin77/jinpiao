@@ -10,7 +10,7 @@
         <div class="loopHead">
           <div class="loopHeadP">性别</div>
           <div class="loopHeadM">
-            <select style="width: 100%;height: 80%;border: none" v-model="sex">
+            <select style="width: 100%;height: 80%;border: none" v-model="userData.sex">
               <option value="">选择性别</option>
               <option value="男">男</option>
               <option value="女">女</option>
@@ -20,37 +20,37 @@
         <div class="loopHead">
           <div class="loopHeadP">用户名</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="nickName" max="20" placeholder="请输入用户名" ref="nickName"></yd-input>
+            <yd-input  required v-model="userData.username" max="20" placeholder="请输入用户名" ref="nickName"></yd-input>
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">姓氏</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="preName" max="20" placeholder="请输入姓氏" ref="preName"></yd-input>
+            <yd-input  required v-model="userData.firstname" max="20" placeholder="请输入姓氏" ref="preName"></yd-input>
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">名称</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="name" max="20" placeholder="请输入名称" ref="name"></yd-input>
+            <yd-input  required v-model="userData.lastname" max="20" placeholder="请输入名称" ref="name"></yd-input>
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">电话</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="tel" max="20" placeholder="请输入电话"  ref="tel" regex="/^1[34578]\d{9}$/"></yd-input>
+            <yd-input  required v-model="userData.telephone" max="20" placeholder="请输入电话"  ref="tel" regex="/^1[34578]\d{9}$/"></yd-input>
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">邮箱</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="mail" max="20" placeholder="请输入邮箱"  ref="mail" regex="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"></yd-input>
+            <yd-input  required v-model="userData.email" max="20" placeholder="请输入邮箱"  ref="mail" regex="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"></yd-input>
           </div>
         </div>
         <div class="loopHead">
-          <div class="loopHeadP">部门</div>
+          <div class="loopHeadP">地址</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="dept" max="20" placeholder="请输入部门" ref="dept"></yd-input>
+            <yd-input  required v-model="userData.address" max="20" placeholder="请输入地址" ref="dept"></yd-input>
           </div>
         </div>
       </div>
@@ -64,13 +64,6 @@
               type:'',
               userData:'',
               person:'',
-              nickName:'嘻嘻三',
-              sex:'男',
-              preName:'张',
-              tel:'15602301515',
-              mail:'xinwangda@sunwoda.com',
-              dept:'信息中心',
-              name:'三'
             }
         },
         created() {
@@ -78,6 +71,12 @@
         },
         mounted() {
           this.userData=this.$route.query.item;
+//          if(this.userData.sex=='0'){
+//            this.userData.sex='男'
+//          }else{
+//            this.userData.sex='女'
+//          }
+          console.log(this.userData)
           if(this.$route.query.type===0){
             this.type='经办人'
           }else{
@@ -88,11 +87,7 @@
           //保存方法，为空或者不符合规则提示并不保存
           save(){
             if(this.$refs.name.valid&&this.$refs.tel.valid&&this.$refs.mail.valid&&this.$refs.nickName.valid&&this.$refs.dept.valid&&this.$refs.preName.valid){
-              this.$dialog.confirm({
-                title: '温馨提示',
-                mes: '修改成功 !',
-                opts: () => {}
-              });
+              this.insertData();
             }else{
               this.$dialog.notify({
                 mes: "您输入的内容不符合，请重新输入",
@@ -100,6 +95,46 @@
                 callback: () => {}
               });
             }
+          },
+          insertData(){
+            let vm = this;
+            let url='clcp/app/save/user';
+            if(this.userData.sex=='男'){
+              this.userData.sex='0'
+            }else{
+              this.userData.sex='1'
+            }
+            let params={
+              username: this.userData.username,
+              sex: this.userData.sex,
+              firstname: this.userData.firstname,
+              "lastname": this.userData.lastname,
+              "telephone": this.userData.telephone,
+              "email": this.userData.email,
+              "address": this.userData.address,
+              "roleName": this.userData.roleName,
+              "id":this.userData.id,
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId":localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'post',url,JSON.stringify( params),function (res) {
+              console.log(res);
+              if(res.statusCode==200){
+                vm.$dialog.confirm({
+                  title: '温馨提示',
+                  mes: '保存成功 !',
+                  opts: () => {
+                    vm.$router.push({path:'/companyUser'})
+                  }
+                });
+              }
+            })
           }
         }
 

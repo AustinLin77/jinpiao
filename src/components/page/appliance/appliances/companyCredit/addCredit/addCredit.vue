@@ -274,7 +274,7 @@
         },
         methods: {
           save(){
-
+            this.$router.push({path:'/companyCredit'})
           },
           getFile:function () {
             this.fileName=[];

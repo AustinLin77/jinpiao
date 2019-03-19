@@ -39,6 +39,71 @@ export default new Router({
             ]
         },
       {
+        path: '/test',
+        component: resolve => require(['../components/page/appliance/appliances/companyUser/test.vue'], resolve,),
+
+      },
+      {
+        path: '/fillSendInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillSendInfo/fillSendInfo.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      {
+        path: '/fillTicketInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillTicketInfo/fillTicketInfo.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      {
+        path: '/fillPermisstionInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillPermissonInfo/fillPermissonInfo.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      {
+        path: '/ticketPayments',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketPayment.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      {
+        path: '/ticketDetails',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/ticketDetails.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //金票审核
+      {
+        path: '/approvalTicket',
+        component: resolve => require(['../components/page/appliance/appliances/approvalTicket/index.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //金票审核详细页
+      {
+        path: '/ticketitem',
+        component: resolve => require(['../components/page/appliance/appliances/approvalTicket/child/ticketitem.vue'], resolve,),
+        // meta: { keepAlive:true },
+      },
+      //金票操作页面审核 驳回页面
+      {
+        path: '/approvelitem',
+        component: resolve => require(['../components/page/appliance/appliances/approvalTicket/child/approvelitem.vue'], resolve,),
+        // meta: { keepAlive:true },
+      },
+
+      {
+        path: '/fillHandlerInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillHandlerInfo/fillHandlerInfo.vue'], resolve,),
+      },
+      {
+        path: '/fillLawyerInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillLawyerInfo/fillLawyerInfo.vue'], resolve,),
+      },
+      {
+        path: '/fillCompanyInfo',
+        component: resolve => require(['../components/page/appliance/appliances/certification/fillCompanyInfo/fillCompanyInfo.vue'], resolve,),
+      },
+      {
+        path: '/certification',
+        component: resolve => require(['../components/page/appliance/appliances/certification/certification.vue'], resolve,),
+      },
+      {
         path: '/creditDetails',
         component: resolve => require(['../components/page/appliance/appliances/companyCredit/creditDetails/creditDetails.vue'], resolve,),
       },

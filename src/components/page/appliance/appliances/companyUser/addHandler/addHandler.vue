@@ -12,8 +12,8 @@
           <div class="loopHeadM">
             <select style="width: 100%;height: 80%;border: none" v-model="sex">
               <option value="">选择性别</option>
-              <option value="男">男</option>
-              <option value="女">女</option>
+              <option value="0">男</option>
+              <option value="1">女</option>
             </select>
           </div>
         </div>
@@ -48,9 +48,9 @@
           </div>
         </div>
         <div class="loopHead">
-          <div class="loopHeadP">部门</div>
+          <div class="loopHeadP">地址</div>
           <div class="loopHeadM">
-            <yd-input  required v-model="dept" max="20" placeholder="请输入部门" ref="dept"></yd-input>
+            <yd-input  required v-model="dept" max="20" placeholder="请输入地址" ref="dept"></yd-input>
           </div>
         </div>
       </div>
@@ -85,13 +85,7 @@
           //保存方法，为空或者不符合规则提示并不保存
           save(){
             if(this.$refs.name.valid&&this.$refs.tel.valid&&this.$refs.mail.valid&&this.$refs.nickName.valid&&this.$refs.dept.valid&&this.$refs.preName.valid&&this.sex!==''){
-              this.$dialog.confirm({
-                title: '温馨提示',
-                mes: '新增成功 !',
-                opts: () => {
-                  this.$router.push({path:'companyUser'})
-                }
-              });
+              this.insertData();
             }else{
               this.$dialog.notify({
                 mes: "您提交的内容不完整或有误，请重新输入",
@@ -99,6 +93,40 @@
                 callback: () => {}
               });
             }
+          },
+          insertData(){
+            let vm = this;
+            let url='clcp/app/save/user';
+            let params={
+              username: this.nickName,
+              sex: this.sex,
+              firstname: this.preName,
+              "lastname": this.name,
+              "telephone": this.tel,
+              "email": this.mail,
+              "address": this.dept,
+              "roleName": this.type
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId":localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'post',url,JSON.stringify( params),function (res) {
+              console.log(res);
+              if(res.statusCode==200){
+                vm.$dialog.confirm({
+                  title: '温馨提示',
+                  mes: '新增成功 !',
+                  opts: () => {
+                    vm.$router.push({path:'companyUser'})
+                  }
+                });
+              }
+            })
           }
         }
 

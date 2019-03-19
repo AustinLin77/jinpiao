@@ -30,7 +30,7 @@
                   {
                     title:'实名认证',
                     img:img1,
-                    path:""
+                    path:"/certification"
                   },{
                     title:'企业用户',
                     img:img2,
@@ -54,7 +54,7 @@
                   },{
                     title:'金票审核',
                     img:img7,
-                    path:""
+                    path:"/approvalTicket"
                   },
                   {
                     title:'金票还款',
@@ -63,7 +63,7 @@
                   }, {
                     title:'金票收支',
                     img:img9,
-                    path:""
+                    path:"/ticketPayments"
                   }, {
                     title:'金票融资',
                     img:img10,

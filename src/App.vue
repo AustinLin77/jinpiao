@@ -98,4 +98,7 @@ export default {
     font-family: Arial;
     color: #666666;
   }
+  #myGrid .yd-grids-5:before{
+    height: 0;
+  }
 </style>
