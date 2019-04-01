@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div id="realName">
       <yd-navbar title="实名认证" bgcolor="#789CF8" color="#ffffff" >
-        <router-link  slot="left" to="/appliance">
+        <div slot="left" @click="goback">
           <yd-navbar-back-icon ></yd-navbar-back-icon>
-        </router-link>
+        </div>
       </yd-navbar>
       <div class="content">
         <yd-cell-item class="item" @click.native="goCompany">
@@ -103,14 +103,17 @@
           goSend(){
             this.$router.push({path:'/fillSendInfo'})
           },
+          goback(){
+            this.$router.push({path:'/indexpage'})
+          },
 
         }
 
     }
 </script>
-<style>
-  .yd-navbar-item span,i{
-    color: white !important;
+<style scoped>
+  #realName .yd-navbar-item span{
+    color: white!important;
   }
   .content{
     margin-top: 0.88rem;

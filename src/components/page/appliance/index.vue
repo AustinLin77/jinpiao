@@ -59,7 +59,7 @@
                   {
                     title:'金票还款',
                     img:img8,
-                    path:""
+                    path:"/repayTicket"
                   }, {
                     title:'金票收支',
                     img:img9,

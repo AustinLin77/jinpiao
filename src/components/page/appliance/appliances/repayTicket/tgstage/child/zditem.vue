@@ -1,60 +1,61 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
-    <yd-navbar :title="title" bgcolor="#fff" color="#555">
+    <yd-navbar title="账单详情" bgcolor="#fff" color="#555">
       <div  slot="left"  @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
       </div>
-      <div slot="right" class="recall" v-if="type == 2" @click="approvelticket(3)">撤销</div>
-      <yd-icon v-if="type < 2" :name="icon[type]" size="25px" color="#777" slot="right" @click.native="showTool=!showTool"></yd-icon>
-
     </yd-navbar>
     <div style="border: solid 1px #eee"></div>
     <yd-cell-group>
       <yd-cell-item>
-        <span slot="left">金票编号</span>
+        <span slot="left">付款方账户名称</span>
         <span slot="right">{{ticketitem.jinquanCode}}</span>
       </yd-cell-item>
       <yd-cell-item>
-        <span slot="left">接受方</span>
+        <span slot="left">付款方账户</span>
         <span slot="right">{{ticketitem.receiver}}</span>
       </yd-cell-item>
       <yd-cell-item>
-        <span slot="left">金额（元）</span>
+        <span slot="left">付款方开户行</span>
         <span slot="right">{{ticketitem.openAmount}}</span>
       </yd-cell-item>
       <yd-cell-item>
-        <span slot="left">承诺付款日</span>
+        <span slot="left">收款方账户名称</span>
         <span slot="right">{{ticketitem.committedPaydate}}</span>
       </yd-cell-item>
       <yd-cell-item>
-        <span slot="left">开立方</span>
+        <span slot="left">收款方银行账户</span>
         <span slot="right">{{ticketitem.openCube}}</span>
       </yd-cell-item>
       <yd-cell-item>
-        <span slot="left">经办人</span>
+        <span slot="left">收款方开户银行</span>
+        <span slot="right">{{ticketitem.createByName}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">金额</span>
+        <span slot="right">{{ticketitem.jinquanCode}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">交易时间</span>
+        <span slot="right">{{ticketitem.receiver}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">交易类型</span>
+        <span slot="right">{{ticketitem.openAmount}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">交易流水号</span>
+        <span slot="right">{{ticketitem.committedPaydate}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">借贷标识</span>
+        <span slot="right">{{ticketitem.openCube}}</span>
+      </yd-cell-item>
+      <yd-cell-item>
+        <span slot="left">柜员交易号</span>
         <span slot="right">{{ticketitem.createByName}}</span>
       </yd-cell-item>
     </yd-cell-group>
-    <div class="popover" v-if="showTool">
-      <template v-if="type==0">
-        <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="goapprovel(0)">
-          <img src="../../../../../../assets/iconImg/add.png" class="rightIcon">
-          复核
-        </div>
-        <div class="item" @click="goapprovel(1)">
-          <img src="../../../../../../assets/iconImg/add.png" class="rightIcon">
-          撤销
-        </div>
-      </template>
-      <template v-if="type == 1">
-        <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="goapprovel(0)">
-          付款承诺函
-        </div>
-        <div class="item" @click="goapprovel(1)">
-          金票流转单
-        </div>
-      </template>
-    </div>
   </div>
 </template>
 
@@ -63,18 +64,12 @@
     data: function () {
       return {
         showTool:false,
-        title:"已开立金票",
         type:"",
-        icon:["more","download"],
         ticketitem:{},
       }
     },
     created() {
-       this.type =  this.$route.query.type;
-       this.ticketitem = JSON.parse(localStorage.getItem("ticketitem"));
-        console.log(this.ticketitem);
-       let titles = ['已开立金票',"已复核金票",'已驳回金票',"已撤销金票"];
-       this.title = titles[this.type];
+       this.ticketitem = JSON.parse(localStorage.getItem("zditem"));
     },
     mounted() {
       this.list=this.list1
@@ -119,8 +114,8 @@
           }
         })
       },
-      goapprovel(type){
-        this.$router.push({path:'/approvelitem', query:{type:type}})
+      goapprovel(path){
+        this.$router.push({path:path})
       },
 
     }
@@ -156,7 +151,6 @@
     position: fixed;
     top:0.8rem;
     right: 0.34rem;
-    height: 1.76rem;
     width: 2.1rem;
     z-index: 99999;
     background-color: #2A2A2A ;
@@ -171,11 +165,8 @@
     align-items: center;
     justify-content: center;
     font-size: 0.3rem;
+    border-bottom: 1px solid #4A4A4A
   }
-  .rightIcon{
-    height: 0.32rem;
-    width: 0.3rem;
-    margin-right: 0.3rem;
-  }
+
 </style>
 

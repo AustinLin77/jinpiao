@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
-    <yd-navbar :title="title" bgcolor="#fff" color="#555">
+    <yd-navbar title="托管信息详情" bgcolor="#fff" color="#555">
       <div  slot="left"  @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
       </div>
@@ -37,21 +37,14 @@
     </yd-cell-group>
     <div class="popover" v-if="showTool">
       <template v-if="type==0">
-        <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="goapprovel(0)">
-          <img src="../../../../../../assets/iconImg/add.png" class="rightIcon">
-          复核
+        <div class="item"  @click="goapprovel('/zdsearch')">
+          账单查询
         </div>
-        <div class="item" @click="goapprovel(1)">
-          <img src="../../../../../../assets/iconImg/add.png" class="rightIcon">
-          撤销
+        <div class="item" @click="goapprovel('/zfjb')">
+         支付经办
         </div>
-      </template>
-      <template v-if="type == 1">
-        <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="goapprovel(0)">
-          付款承诺函
-        </div>
-        <div class="item" @click="goapprovel(1)">
-          金票流转单
+        <div class="item" style="border: none" @click="goapprovel('/zfsh')">
+         支付审核
         </div>
       </template>
     </div>
@@ -63,7 +56,6 @@
     data: function () {
       return {
         showTool:false,
-        title:"已开立金票",
         type:"",
         icon:["more","download"],
         ticketitem:{},
@@ -71,10 +63,9 @@
     },
     created() {
        this.type =  this.$route.query.type;
-       this.ticketitem = JSON.parse(localStorage.getItem("ticketitem"));
+       this.ticketitem = JSON.parse(localStorage.getItem("tgstageitem"));
         console.log(this.ticketitem);
-       let titles = ['已开立金票',"已复核金票",'已驳回金票',"已撤销金票"];
-       this.title = titles[this.type];
+
     },
     mounted() {
       this.list=this.list1
@@ -119,8 +110,8 @@
           }
         })
       },
-      goapprovel(type){
-        this.$router.push({path:'/approvelitem', query:{type:type}})
+      goapprovel(path){
+        this.$router.push({path:path})
       },
 
     }
@@ -156,7 +147,6 @@
     position: fixed;
     top:0.8rem;
     right: 0.34rem;
-    height: 1.76rem;
     width: 2.1rem;
     z-index: 99999;
     background-color: #2A2A2A ;
@@ -171,11 +161,8 @@
     align-items: center;
     justify-content: center;
     font-size: 0.3rem;
+    border-bottom: 1px solid #4A4A4A
   }
-  .rightIcon{
-    height: 0.32rem;
-    width: 0.3rem;
-    margin-right: 0.3rem;
-  }
+
 </style>
 

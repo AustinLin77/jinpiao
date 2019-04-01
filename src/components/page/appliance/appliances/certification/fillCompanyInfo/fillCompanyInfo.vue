@@ -502,7 +502,7 @@
     }
 </script>
 <style scoped>
-  .yd-navbar-item span,i{
+  #companyInfo .yd-navbar-item span,i{
     color: white !important;
   }
   .yd-navbar{
@@ -577,10 +577,10 @@
     justify-content: flex-end;
     padding-right:0.34rem
   }
-  .content{
+  #companyInfo .content{
     position: absolute;
     left: 0;
-    top:1.24rem;
+    top:2.24rem;
     width: 100%;
     height:calc(100% - 1.24rem);
     overflow: scroll;

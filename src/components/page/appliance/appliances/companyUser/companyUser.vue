@@ -2,9 +2,9 @@
 
     <div style="height: 100%;" id="company">
        <yd-navbar title="企业用户" bgcolor="#789CF8" color="#FFFFFF">
-         <router-link  slot="left" to="/appliance">
+         <div slot="left" @click="goback">
            <yd-navbar-back-icon ></yd-navbar-back-icon>
-         </router-link>
+         </div>
          <yd-icon name="more" size="25px" color="#777" slot="right" @click.native="openAdd"></yd-icon>
        </yd-navbar>
        <div class="head" style="z-index: 9999"></div>
@@ -94,6 +94,9 @@
               }
             })
           },
+          goback(){
+            this.$router.push({path:'/indexpage'})
+          },
           //点击打开新增选项
           openAdd(){
             this.showTool=!this.showTool
@@ -168,7 +171,7 @@
     height:0;
   }
   #company .head{
-    /*background: linear-gradient(left, #789CF8,#4363EE);*/
+    /*background-image: linear-gradient(left, #789CF8,#4363EE);*/
     background-color:#789CF8 ;
     height:1.32rem ;
   }

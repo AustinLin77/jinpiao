@@ -4,9 +4,11 @@
       <div style="width: 100%;height: 1rem;display: flex;align-items: center;">
         <input style="margin-left: 0.4rem;height: 0.6rem;width: 70%;border-radius: 0.5rem;border: 1px solid white;text-indent: .8rem;color: white;">
         <yd-icon name="search" size=".3rem" color="#fff" style="position: absolute;top:0.35rem;left: 0.7rem"></yd-icon>
+        <img src="../../../assets/iconImg/人工服务.png" style="position: absolute;top: 0.3rem;right: 1rem;width: 0.4rem;height: 0.4rem">
+        <img src="../../../assets/iconImg/信息.png" style="position: absolute;top: 0.3rem;right: 0.2rem;width: 0.4rem;height: 0.4rem">
       </div>
       <div style="display: flex;width: 100%;height: 1.8rem">
-        <div style="flex: 1;display: flex;align-items: center;justify-content: center" v-for="item in topItem">
+        <div style="flex: 1;display: flex;align-items: center;justify-content: center" v-for="item in topItem" @click="goItem(item)">
           <div>
             <img :src="item.img" style="width: 1rem;height: 1rem">
             <div style="text-align: center;color:white;">{{item.title}}</div>
@@ -14,10 +16,10 @@
         </div>
       </div>
     </div>
-    <div  style="position: absolute;top: 2.8rem;width: 100%;left: 0;bottom:0;overflow: scroll">
+    <div  style="position: absolute;top: 2.8rem;width: 100%;left: 0;bottom:0;overflow: scroll;height: calc(100% - 2.8rem)">
       <div id="myGrid">
         <yd-grids-group :rows="5" >
-          <yd-grids-item v-for="(item,index) in appliances" :key="index">
+          <yd-grids-item v-for="(item,index) in appliances" :key="index" @click.native="goItem(item)">
             <img slot="icon" :src="item.img" style="width: 0.5rem;height: 0.5rem">
             <div slot="text">{{item.title}}</div>
           </yd-grids-item>
@@ -91,7 +93,7 @@
               topItem:[{
                 title:'扫一扫',
                 img:sao,
-                path:''
+                path:'/facerecognition'
               },
                 {
                   title:'金票审核',
@@ -103,26 +105,27 @@
                   img:edu,
                   path:''
                 },
+
                 {
                   title:'金票还款',
                   img:repay,
-                  path:''
+                  path:'/repayTicket'
                 }],
               appliances:[
                 {
                   title:'企业用户',
                   img:user,
-                  path:""
+                  path:"/companyUser"
                 },
               {
                   title:'企业授信',
                   img:shouxin,
-                  path:""
+                  path:"/companyCredit"
                 },
                 {
                   title:'实名认证',
                   img:realName,
-                  path:""
+                  path:"/certification"
                 },
                 {
                   title:'UKEY审核',
@@ -137,17 +140,17 @@
                {
                   title:'金票审核',
                   img:jinpiaoshenhe,
-                  path:""
+                  path:"/approvalTicket"
                 },
                 {
                   title:'金票还款',
                   img:huankuang,
-                  path:""
+                  path:"/repayTicket"
                 },
                 {
                   title:'金票收支',
                   img:shouzhi,
-                  path:""
+                  path:"/ticketPayments"
                 },
                 {
                   title:'金票融资',
@@ -200,7 +203,11 @@
             },
             goRegisterList(){
               this.$router.push({path:'registerList'})
-            }
+            },
+          goItem(item){
+              console.log("aaa")
+              this.$router.push({path:item.path})
+          }
         }
 
     }

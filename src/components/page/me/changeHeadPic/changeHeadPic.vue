@@ -4,7 +4,7 @@
         <router-link  slot="left" to="/me">
           <yd-navbar-back-icon >返回</yd-navbar-back-icon>
         </router-link>
-        <yd-button type="primary" slot="right">保存</yd-button>
+        <yd-button type="primary" slot="right" @click.native="save">保存</yd-button>
       </yd-navbar>
       <div class="card">
         <div style="width: 100%;text-align: center">
@@ -28,13 +28,16 @@
         data: function () {
             return {
               photoUrl:img1,
-              filesa:[]
+              filesa:[],
+              serveUrl:''
             }
         },
         created() {
 
         },
         mounted() {
+          console.log(localStorage.getItem("userAvatar"))
+//          this.photoUrl=localStorage.getItem("userAvatar")
 
         },
         methods: {
@@ -55,7 +58,7 @@
                   }else{
                     var file=document.getElementById('filea');
                     vm.filesa=file.files[0];
-                    console.log(vm.filesa)
+                    console.log(vm.filesa);
                     image.src = window.URL.createObjectURL(files.item(dd));
                     image.onload = function(){
                       // 默认按比例压缩
@@ -93,13 +96,60 @@
                   }else{
                     clearInterval(timer);
                   }
+                  vm.revise()
                 },1000)
               }
-
-
-
-
           },
+          revise(){
+            let vm=this;
+            var formData = new FormData();
+            formData.append('file',vm.filesa);
+            $.ajax({
+              url: 'https://wmsapi.sunwoda.com/api/app/file?relative=haveValue',
+              type: "post",
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+              mimeType: "multipart/form-data",
+              success: function (res) {
+                let result=JSON.parse(res);
+                console.log(result);
+                vm.serveUrl=result.data
+              },
+              error: function () {
+              }
+            });
+          },
+          save(){
+            let vm = this;
+            let url='clcp/app/update/user/'+localStorage.getItem("userId");
+            let params={
+              "avatar":vm.serveUrl,
+              "address": "",
+              "email": localStorage.getItem("email"),
+              "firstname": localStorage.getItem("firstName"),
+              "id": localStorage.getItem("userId"),
+              "lastname":  localStorage.getItem("lastName"),
+              "password": "",
+              "sex": localStorage.getItem("status"),
+              "telephone": "",
+              "username": localStorage.getItem("username"),
+              "workno": "",
+          };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId": localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'put',url,JSON.stringify(params),function (res) {
+              console.log(res);
+
+            });
+          }
         }
 
     }

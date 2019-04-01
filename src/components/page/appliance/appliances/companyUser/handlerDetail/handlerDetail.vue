@@ -8,6 +8,12 @@
       </yd-navbar>
       <div class="content">
         <div class="loopHead">
+          <div class="loopHeadP">用户名</div>
+          <div class="loopHeadM" style="justify-content: flex-start;color: #666666">
+            {{userData.username}}
+          </div>
+        </div>
+        <div class="loopHead">
           <div class="loopHeadP">性别</div>
           <div class="loopHeadM">
             <select style="width: 100%;height: 80%;border: none" v-model="userData.sex">
@@ -15,12 +21,6 @@
               <option value="男">男</option>
               <option value="女">女</option>
             </select>
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">用户名</div>
-          <div class="loopHeadM">
-            <yd-input  required v-model="userData.username" max="20" placeholder="请输入用户名" ref="nickName"></yd-input>
           </div>
         </div>
         <div class="loopHead">
@@ -86,7 +86,7 @@
         methods: {
           //保存方法，为空或者不符合规则提示并不保存
           save(){
-            if(this.$refs.name.valid&&this.$refs.tel.valid&&this.$refs.mail.valid&&this.$refs.nickName.valid&&this.$refs.dept.valid&&this.$refs.preName.valid){
+            if(this.$refs.tel.valid&&this.$refs.mail.valid&&this.$refs.nickName.valid&&this.$refs.dept.valid&&this.$refs.preName.valid){
               this.insertData();
             }else{
               this.$dialog.notify({

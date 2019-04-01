@@ -1,26 +1,26 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
-    <yd-navbar title="金票审核" bgcolor="#789CF8" color="#FFFFFF">
+    <yd-navbar title="托管账号信息" bgcolor="#789CF8" color="#FFFFFF">
       <div  slot="left"  @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
       </div>
       <!--<yd-icon name="search" size="25px" color="#777" slot="right" @click.native="searchshow=true"></yd-icon>-->
     </yd-navbar>
-    <div class="head" style="z-index: 9999"></div>
-    <div class="card">
-      <div class="selectItem"  >
-        <span :class="{'active': type==0}"  @click="changeStatus(0)">已开立金票</span>
-      </div>
-      <div class="selectItem" >
-        <span :class="{'active': type==1}" @click="changeStatus(1)">已复审金票</span>
-      </div>
-      <div class="selectItem" >
-        <span :class="{'active': type==2}" @click="changeStatus(2)">已驳回金票</span>
-      </div>
-      <div class="selectItem" >
-        <span :class="{'active': type==3}" @click="changeStatus(3)">已撤销金票</span>
-      </div>
-    </div>
+    <!--<div class="head" style="z-index: 9999"></div>-->
+    <!--<div class="card">-->
+      <!--<div class="selectItem"  >-->
+        <!--<span :class="{'active': type==0}"  @click="changeStatus(0)">待还款</span>-->
+      <!--</div>-->
+      <!--<div class="selectItem" >-->
+        <!--<span :class="{'active': type==1}" @click="changeStatus(1)">还款审批</span>-->
+      <!--</div>-->
+      <!--<div class="selectItem" >-->
+        <!--<span :class="{'active': type==2}" @click="changeStatus(2)">已还款</span>-->
+      <!--</div>-->
+      <!--<div class="selectItem" >-->
+        <!--<span :class="{'active': type==3}" @click="changeStatus(3)">需垫付</span>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="content" >
       <div class="listBorder">
         <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo" >
@@ -30,7 +30,7 @@
               <div slot="left" style="padding: 0.2rem;font-size: 0.28rem">
                 <div class="itemName"><span >金票编号</span><span >{{i.jinquanCode}}</span></div>
                 <div class="itemName"><span >接受方</span><span >{{i.receiver}}</span></div>
-                <div class="itemName"><span >金额（元）</span><span >{{i.openAmount}}</span></div>
+                <div class="itemName"><span >还款金额（元）</span><span >{{i.openAmount}}</span></div>
                 <div class="itemName"><span >承诺付款日</span><span >{{i.committedPaydate}}</span></div>
               </div>
               <div slot="right"></div>
@@ -56,7 +56,7 @@
     data: function () {
       return {
         type:0,
-        list:[],
+        list:[1],
         searchshow:false,
         searchcontent:"",
 
@@ -68,11 +68,11 @@
 //      this.list=[1,2,3,4]
     },
     mounted() {
-        this.getData();
+//        this.getData();
     },
     methods: {
       goback(){
-        this.$router.push({path:'/indexpage'})
+        this.$router.go(-1);
       },
       //改变操作用户状态
       changeStatus(type){
@@ -122,8 +122,8 @@
       //点击进入详情页面
       goDetail(item){
         console.log(item);
-        localStorage.setItem("ticketitem",JSON.stringify(item));
-        this.$router.push({path:'/ticketitem', query:{type:this.type}});
+        localStorage.setItem("tgstageitem",JSON.stringify(item));
+        this.$router.push({path:'/tgstageitem', query:{type:this.type}});
       },
       loadList(){
         this.getData();
@@ -147,11 +147,7 @@
   .yd-navbar:after{
     height:0;
   }
-  #company .head{
-    /*background: linear-gradient(left, #789CF8,#4363EE);*/
-    background-color:#789CF8 ;
-    height:1.32rem ;
-  }
+
   /*#company .top{*/
   /*background: linear-gradient(left top, #789CF8,#4363EE);*/
 
@@ -181,7 +177,7 @@
     display: flex;
   }
   .itemName>span:first-child{
-    width: 1.6rem;
+    width: 2rem;
     color: #333;
   }
   .itemName>span:last-child{
@@ -225,7 +221,7 @@
     border-bottom: 5px solid #FFAF00  ;
   }
   .content{
-    height: calc(100% - 2.32rem);
+    height: calc(100%);
     width: 100%;
     overflow: scroll;
     z-index: 5;
@@ -233,7 +229,7 @@
     /*margin-top: -0.8rem;*/
   }
   .listBorder{
-    margin-top: 1rem;
+    margin-top: 20px;
     margin-left: 5%;
     margin-right: 5%;
     /*overflow: scroll;*/

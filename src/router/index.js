@@ -38,11 +38,7 @@ export default new Router({
                 },
             ]
         },
-      {
-        path: '/test',
-        component: resolve => require(['../components/page/appliance/appliances/companyUser/test.vue'], resolve,),
 
-      },
       {
         path: '/fillSendInfo',
         component: resolve => require(['../components/page/appliance/appliances/certification/fillSendInfo/fillSendInfo.vue'], resolve,),
@@ -61,13 +57,107 @@ export default new Router({
       {
         path: '/ticketPayments',
         component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketPayment.vue'], resolve,),
-        meta: { keepAlive:true },
+        // meta: { keepAlive:true },
+      },
+      {
+        path: '/payment',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/payment/payment.vue'], resolve,),
+      },
+      {
+        path: '/comfirmPayment',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/comfirmPayment/comfirmPayment.vue'], resolve,),
       },
       {
         path: '/ticketDetails',
         component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/ticketDetails.vue'], resolve,),
+        // meta: { keepAlive:true },
+      },
+      {
+        path: '/searchList',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/searchList/searchList.vue'], resolve,),
+      },
+      {
+        path: '/resouces',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/resouces/resouces.vue'], resolve,),
+      },
+      {
+        path: '/listDetails',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/searchList/listDetails/listDetails.vue'], resolve,),
+      },
+      {
+        path: '/handlerComfirm',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/cashManagement/handlerComfirm/handlerComfirm.vue'], resolve,),
+      },
+      {
+        path: '/cashComfirm',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/cashComfirm/cashComfirm.vue'], resolve,),
+      },
+      {
+        path: '/cashManagement',
+        component: resolve => require(['../components/page/appliance/appliances/ticketPayments/ticketDetails/cashManagement/cashManagement.vue'], resolve,),
+      },
+      //人脸识别
+      {
+        path: '/facerecognition',
+        component: resolve => require(['../components/page/facerecognition.vue'], resolve,),
+      },
+      //金票还款
+      {
+        path: '/repayTicket',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/index.vue'], resolve,),
         meta: { keepAlive:true },
       },
+      //还款管理
+      {
+        path: '/repaymanage',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/repaymanage/index.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+
+      //还款详情
+      {
+        path: '/repayitem',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/repaymanage/child/repayitem.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //托管平台
+      {
+        path: '/tgstage',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/index.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //托管平台详情
+      {
+        path: '/tgstageitem',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/child/tgstageitem.vue'], resolve,),
+        // meta: { keepAlive:true },
+      },
+      //账单查询
+      {
+        path: '/zdsearch',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/child/zdsearch.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //账单详情
+      {
+        path: '/zditem',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/child/zditem.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //支付经办
+      {
+        path: '/zfjb',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/child/zfjb.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+      //支付审核
+      {
+        path: '/zfsh',
+        component: resolve => require(['../components/page/appliance/appliances/repayTicket/tgstage/child/zfsh.vue'], resolve,),
+        meta: { keepAlive:true },
+      },
+
+
       //金票审核
       {
         path: '/approvalTicket',
@@ -114,7 +204,7 @@ export default new Router({
       {
         path: '/companyCredit',
         component: resolve => require(['../components/page/appliance/appliances/companyCredit/companyCredit.vue'], resolve,),
-        meta: { keepAlive:true },
+
       },
       {
         path: '/companyUser',

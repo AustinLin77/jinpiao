@@ -1,5 +1,5 @@
 <template>
-  <yd-layout>
+  <yd-layout id="main">
 
     <router-view @setdotnum="setdotnum"></router-view>
     <yd-tabbar slot="tabbar" active-color="#007aff" :exact="false">

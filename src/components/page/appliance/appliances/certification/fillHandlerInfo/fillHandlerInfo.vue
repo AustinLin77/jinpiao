@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="handlerInfo">
     <yd-navbar title="完善经办人信息" bgcolor="#789CF8" color="#FFFFFF" :fixed="isFixed">
       <router-link  slot="left" to="/certification">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
@@ -149,7 +149,7 @@
 
   }
 </script>
-<style>
+<style scoped>
   .yd-navbar-item span,i{
     color: white !important;
   }

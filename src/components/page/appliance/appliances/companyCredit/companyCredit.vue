@@ -1,19 +1,19 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
     <yd-navbar title="企业授信" bgcolor="#789CF8" color="#FFFFFF">
-      <router-link  slot="left" to="/appliance">
+      <div slot="left" @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
-      </router-link>
+      </div>
       <yd-icon name="more" size="25px" color="#777" slot="right" @click.native="openAdd"></yd-icon>
     </yd-navbar>
     <div class="head" style="z-index: 9999"></div>
 
     <div class="card">
       <div class="selectItem"  >
-        <span :class="{'active': type==0}" @click="changeStatus(0)">已授信</span>
+        <span :class="{'active': type==1}" @click="changeStatus(1)">已授信</span>
       </div>
       <div class="selectItem" >
-        <span :class="{'active': type==1}" @click="changeStatus(1)">待授信</span>
+        <span :class="{'active': type==0}" @click="changeStatus(0)">待授信</span>
       </div>
       <div class="selectItem" >
         <span :class="{'active': type==2}" @click="changeStatus(2)">授信失败</span>
@@ -24,10 +24,10 @@
         <yd-cell-group v-for="i,index in list" @click.native="goDetail(i)" :key="index">
           <yd-cell-item arrow>
             <div slot="left" class="leftItem">
-              <div class="itemName"><span >类型</span><span class="itemRight">{{i.type}}</span></div>
-              <div class="itemName"><span >授信方</span><span class="itemRight">{{i.seller}}</span></div>
-              <div class="itemName"><span >申请方</span><span class="itemRight">{{i.apply}}</span></div>
-              <div class="itemName"><span >授信金额</span><span class="itemRight">{{i.cost}}</span></div>
+              <div class="itemName"><span >类型</span><span class="itemRight">{{i.busiType}}</span></div>
+              <div class="itemName"><span >授信方</span><span class="itemRight">{{i.creditInstitution}}</span></div>
+              <div class="itemName"><span >申请方</span><span class="itemRight">{{i.compName}}</span></div>
+              <div class="itemName"><span >授信金额</span><span class="itemRight">{{i.credits}}</span></div>
             </div>
             <div slot="right"></div>
           </yd-cell-item>
@@ -72,7 +72,7 @@
     data: function () {
       return {
         showTool:false,
-        type:0,
+        type:1,
         list:[],
         list1:[{type:'未结发票',seller:'欣旺达',apply:'点金保理',cost:'1000元'},
           {type:'承兑发票',seller:'欣旺达',apply:'点金保理',cost:'1000元'},
@@ -92,21 +92,20 @@
 
     },
     mounted() {
-      this.list=this.list1
+      this.list=this.list1;
+      this.getDataCredit(1)
     },
     methods: {
       //改变操作用户状态
       changeStatus(type){
         if(type===0){
           this.type=0;
-          this.list=this.list1
         }else if(type===1){
           this.type=1;
-          this.list=this.list2
         }else{
           this.type=2;
-          this.list=this.list3
         }
+        this.getDataCredit(type)
       },
       //点击进入详情页面
       goDetail(item){
@@ -131,7 +130,36 @@
             type:type
           }
         })
-      }
+      },
+      goback(){
+        this.$router.push({path:'/indexpage'})
+      },
+      getDataCredit(type){
+        let vm = this;
+        let url='clcp/appCreditApi/list?creditStatus='+type;
+        let params={};
+        let heads={
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-TenantId": localStorage.getItem("tenantId"),
+          "X-Logined-Sign": localStorage.getItem("username"),
+          "Authorization": 'Bearer '+localStorage.getItem("token"),
+          "Prefer-Lang": "zh-CN"
+        };
+        vm.api(vm,heads,'get',url,params,function (res) {
+          console.log(res);
+          for(var i in res.data){
+            if(res.data[i].busiType==1){
+              res.data[i].busiType='未结发票'
+            }else if(res.data[i].busiType==2){
+              res.data[i].busiType='承兑发票'
+            }else{
+              res.data[i].busiType='银行授信'
+            }
+          }
+          vm.list=res.data;
+        })
+      },
     }
 
   }

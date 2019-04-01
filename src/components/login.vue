@@ -95,6 +95,11 @@
                 localStorage.setItem("username",res.username);
                 localStorage.setItem("userId",res.id);
                 localStorage.setItem("tenantId",res.tenantId);
+                localStorage.setItem("userAvatar",res.avatar);
+                localStorage.setItem("email",res.email);
+                localStorage.setItem("firstName",res.firstName);
+                localStorage.setItem("lastName",res.lastName);
+                localStorage.setItem("status",res.status);
                 vm.$router.push({path:"main"})
               }
             })

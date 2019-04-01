@@ -1,5 +1,5 @@
 <template>
-  <div class="me">
+  <div class="me" id="me">
     <yd-navbar title="我的" bgcolor="#5BB8FB" color="#FFFFFF"></yd-navbar>
     <div class="head"></div>
     <div class="card">
@@ -130,4 +130,5 @@
  .item{
    border-bottom: 1px solid #eeeeee;
  }
+
 </style>

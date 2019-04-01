@@ -1,5 +1,6 @@
 export default function (vm,heads,gop,url,param,fn) {
-  var hrefStart='http://172.30.128.25:7878/';
+  // var hrefStart='http://172.30.128.25:7878/';
+  var hrefStart='http://172.30.128.32:7878/';
   url=hrefStart+url;
   $.ajax({
     headers:heads,

@@ -13,6 +13,8 @@ import api from './api'
 Vue.use(YDUI);
 Vue.prototype.api=api;
 Vue.prototype.$dateFns=dateFns;
+Vue.prototype.$imgpath="https://fdfs.sunwoda.com";
+
 
 /* eslint-disable no-new */
 new Vue({

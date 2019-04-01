@@ -149,7 +149,7 @@
 
   }
 </script>
-<style>
+<style scoped>
   .yd-navbar-item span,i{
     color: white !important;
   }

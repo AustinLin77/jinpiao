@@ -1,88 +1,88 @@
 <template>
     <div id="creditDetail">
       <yd-navbar :title="title" bgcolor="#FFFFFF" color="#030303" >
-        <router-link  slot="left" to="/companyCredit">
+        <div slot="left" @click="goback">
           <yd-navbar-back-icon ></yd-navbar-back-icon>
-        </router-link>
-        <yd-button type="primary" slot="right" @click.native="save" v-if="this.type!='已授信'">保存</yd-button>
+        </div>
+        <!--<yd-button type="primary" slot="right" @click.native="save" v-if="this.type!='已授信'">保存</yd-button>-->
       </yd-navbar>
       <div class="content" v-if="title=='已授信—未结发票'">
         <div class="loopHead">
           <div class="loopHeadP">购方全称</div>
           <div class="loopHeadM">
-            欣旺达电子股份有限公司
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方全称</div>
           <div class="loopHeadM">
-            欣旺达电子
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">购房纳税人识别号</div>
           <div class="loopHeadM">
-            0251524
+            {{userData.buyerTax}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方纳税人识别号</div>
           <div class="loopHeadM">
-            8595125
+            {{userData.sellerTax}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">购方开户行账号</div>
           <div class="loopHeadM">
-            张三 中国银行 6595652154251525
+            {{userData.buyerAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方开户行账号</div>
           <div class="loopHeadM">
-            张三 中国银行 6595652154251525
+            {{userData.sellerAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票号</div>
           <div class="loopHeadM">
-            D154251
+            {{userData.invoiceNo}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票代码</div>
           <div class="loopHeadM">
-            1545145269585485
+            {{userData.invoiceCode}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">不含税金额</div>
           <div class="loopHeadM">
-            10000元
+            {{userData.totalPrice}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票面总金额</div>
           <div class="loopHeadM">
-            30000元
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">开票日期</div>
           <div class="loopHeadM">
-            2019-01-02
+            {{userData.makeInvoiceTime}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            2019-01-03
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            信息
+            {{userData.remark}}
           </div>
         </div>
       </div>
@@ -90,61 +90,61 @@
         <div class="loopHead">
           <div class="loopHeadP">出票人全称</div>
           <div class="loopHeadM">
-            张三
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人账号</div>
           <div class="loopHeadM">
-            84515451
+            {{userData.account}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人开户银行</div>
           <div class="loopHeadM">
-            中国银行
+            {{userData.openBank}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人全称</div>
           <div class="loopHeadM">
-            李四
+            {{userData.applicant}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行行号</div>
           <div class="loopHeadM">
-            中国银行
+            {{userData.creditBankNo}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人账号</div>
           <div class="loopHeadM">
-            6595652154251525
+            {{userData.creditAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行名称</div>
           <div class="loopHeadM">
-            中国银行
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票据金额</div>
           <div class="loopHeadM">
-            5000元
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            2019-01-02
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            哈哈哈
+            {{userData.remark}}
           </div>
         </div>
       </div>
@@ -152,19 +152,19 @@
         <div class="loopHead">
           <div class="loopHeadP">企业全称</div>
           <div class="loopHeadM">
-            欣旺达电子股份有限公司
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业性质</div>
           <div class="loopHeadM">
-            股份制
+            {{userData.companyQuality}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业分类</div>
           <div class="loopHeadM">
-            制造业
+            {{userData.companySort}}
           </div>
         </div>
         <div class="loopHead">
@@ -176,19 +176,19 @@
         <div class="loopHead">
           <div class="loopHeadP">官方网站地址</div>
           <div class="loopHeadM">
-            www.ekp@sunwoda.com
+            {{userData.websiteAddress}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">申请银行名称</div>
           <div class="loopHeadM">
-            中国银行
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">开户银行许可证标准号</div>
           <div class="loopHeadM">
-            8951542514
+            {{userData.bankPermitNumber}}
           </div>
         </div>
         <div class="loopHead">
@@ -200,25 +200,32 @@
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            2019-01-02
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">其他材料</div>
           <div class="loopHeadM">
-            哈哈哈
+            无
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业认证申请公函</div>
           <div class="loopHeadM">
-            欣旺达
+            {{userData.enterpriseCertificationationation}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">信用额度(万元)</div>
           <div class="loopHeadM">
-            1000
+            {{userData.credits}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">营业执照注册号</div>
+          <div class="loopHeadM">
+            {{userData.businessLicenseNumber}}
+            <!--<span style="color: deepskyblue">查看</span>-->
           </div>
         </div>
         <div class="loopHead">
@@ -227,90 +234,98 @@
             <span style="color: deepskyblue">查看</span>
           </div>
         </div>
-        <div class="loopHead">
-          <div class="loopHeadP">营业执照注册号</div>
-          <div class="loopHeadM">
-            <span style="color: deepskyblue">查看</span>
-          </div>
-        </div>
+
       </div>
       <div class="content" v-if="title=='待授信—未结发票'">
         <div class="loopHead">
           <div class="loopHeadP">购方全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerName" placeholder="请填写购方全称">
+            {{userData.compName}}
+            <!--<input  class="addCreditInput" v-model="userData.compName" placeholder="请填写购方全称">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerName" placeholder="请填写卖方全称">
+            {{userData.creditInstitution}}
+            <!--<input  class="addCreditInput" v-model="userData.creditInstitution" placeholder="请填写卖方全称">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">购方纳税人识别号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerCode" placeholder="请填写购方纳税人识别号">
+            {{userData.buyerTax}}
+            <!--<input  class="addCreditInput" v-model="userData.buyerTax" placeholder="请填写购方纳税人识别号">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方纳税人识别号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerCode" placeholder="请填写卖方纳税人识别号">
+            {{userData.sellerTax}}
+            <!--<input  class="addCreditInput" v-model="userData.sellerTax" placeholder="请填写卖方纳税人识别号">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">购方开户行账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerBank" placeholder="请填写购方开户行账号">
+            {{userData.buyerAccount}}
+            <!--<input  class="addCreditInput" v-model="userData.buyerAccount" placeholder="请填写购方开户行账号">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方开户行账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerBank" placeholder="请填写卖方开户行账号">
+            {{userData.sellerAccount}}
+            <!--<input  class="addCreditInput" v-model="userData.sellerAccount" placeholder="请填写卖方开户行账号">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.code" placeholder="请填写发票号">
+            {{userData.invoiceNo}}
+            <!--<input  class="addCreditInput" v-model="userData.invoiceNo" placeholder="请填写发票号">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票代码</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.computerCode" placeholder="请填写发票代码">
+            {{userData.invoiceCode}}
+            <!--<input  class="addCreditInput" v-model="userData.invoiceCode" placeholder="请填写发票代码">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">不含税金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.cost" placeholder="请填写不含税金额">
+            {{userData.totalPrice}}
+            <!--<input  class="addCreditInput" v-model="userData.totalPrice" placeholder="请填写不含税金额">-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票面总金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.totalCost" placeholder="请填写票面总金额">
+            {{userData.credits}}
+            <input  class="addCreditInput" v-model="userData.credits" placeholder="请填写票面总金额">
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">开票日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="startTime" style="text-align: right"></yd-datetime>
+            {{userData.makeInvoiceTime}}
+            <!--<yd-datetime type="date" v-model="userData.makeInvoiceTime" style="text-align: right"></yd-datetime>-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
+            <!--<yd-datetime type="date" v-model="userData.expiryDate" style="text-align: right"></yd-datetime>-->
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.tips" placeholder="请填写备注">
+            {{userData.remark}}
+            <!--<input  class="addCreditInput" v-model="userData.remark" placeholder="请填写备注">-->
           </div>
         </div>
         <div class="bottomButt" >
@@ -319,64 +334,124 @@
         </div>
       </div>
       <div class="content" v-if="title=='待授信—承兑发票'">
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.compName" placeholder="请填写出票人全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.account" placeholder="请填写出票人账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人开户银行</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.openBank" placeholder="请填写出票人开户银行">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.applicant" placeholder="请填写承兑人全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人开户行行号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditBankNo" placeholder="请填写承兑人开户行行号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditAccount" placeholder="请填写承兑人账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人开户行名称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditInstitution" placeholder="请填写承兑人开户行名称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">票据金额</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.credits" placeholder="请填写票据金额">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">截止日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="userData.expiryDate" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">备注</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.remark" placeholder="请填写备注">-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="loopHead">
           <div class="loopHeadP">出票人全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.completeName" placeholder="请填写出票人全称">
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.account" placeholder="请填写出票人账号">
+            {{userData.account}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人开户银行</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.bank" placeholder="请填写出票人开户银行">
+            {{userData.openBank}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userCompleteName" placeholder="请填写承兑人全称">
+            {{userData.applicant}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行行号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userBank" placeholder="请填写承兑人开户行行号">
+            {{userData.creditBankNo}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userAccount" placeholder="请填写承兑人账号">
+            {{userData.creditAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行名称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userBankName" placeholder="请填写承兑人开户行名称">
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票据金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.ticketCost" placeholder="请填写票据金额">
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.tips" placeholder="请填写备注">
+            {{userData.remark}}
           </div>
         </div>
         <div class="bottomButt" >
@@ -388,243 +463,467 @@
         <div class="loopHead">
           <div class="loopHeadP">企业全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companyName" placeholder="请填写出票人全称">
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业性质</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companyProperty" placeholder="请填写出票人全称">
+            {{userData.companyQuality}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业分类</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companySort" placeholder="请填写出票人全称">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">官方网站地址</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.website" placeholder="请填写官方网站地址">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">申请银行名称</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.applyBank" placeholder="请填写申请银行名称">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">开户银行许可证标准号</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.permissionNum" placeholder="请填写开户银行许可证标准号">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">开户银行许可证电子版</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.permissionNumElec" placeholder="请填写开户银行许可证电子版">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">其他材料</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.others" placeholder="请填写其他材料">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">企业认证申请公函</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.commit" placeholder="请填写企业认证申请公函">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">信用额度(万元)</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.credit" placeholder="请填写信用额度(万元)">
+            {{userData.companySort}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">额度类型</div>
           <div class="loopHeadM">
-            <select style="width: 100%;height: 80%;border: none" v-model="costType">
-              <option value="">选择额度类型</option>
-              <option value="高">高</option>
-              <option value="低">低</option>
-            </select>
+            高额
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">官方网站地址</div>
+          <div class="loopHeadM">
+            {{userData.websiteAddress}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">申请银行名称</div>
+          <div class="loopHeadM">
+            {{userData.creditInstitution}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">开户银行许可证标准号</div>
+          <div class="loopHeadM">
+            {{userData.bankPermitNumber}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">开户银行许可证电子版</div>
+          <div class="loopHeadM">
+            51542515215
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
-          <div class="loopHeadP">营业执照</div>
+          <div class="loopHeadP">其他材料</div>
           <div class="loopHeadM">
-            <div class="filediv">
-              <span v-for="i in  fileName">{{i}}</span>
-              <a v-if="fileName.length==0" style="color: deepskyblue">上传</a>
-              <input type="file" id="file" class="file" @change="getFile">
-            </div>
+            无
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">企业认证申请公函</div>
+          <div class="loopHeadM">
+            {{userData.enterpriseCertificationationation}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">信用额度(万元)</div>
+          <div class="loopHeadM">
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">营业执照注册号</div>
           <div class="loopHeadM">
-            <div class="filediv">
-              <span v-for="i in  fileName1">{{i}}</span>
-              <a v-if="fileName1.length==0" style="color: deepskyblue">上传</a>
-              <input type="file" id="file1" class="file" @change="getFile1">
-            </div>
+            {{userData.businessLicenseNumber}}
+            <!--<span style="color: deepskyblue">查看</span>-->
           </div>
         </div>
+        <div class="loopHead">
+          <div class="loopHeadP">营业执照</div>
+          <div class="loopHeadM">
+            <span style="color: deepskyblue">查看</span>
+          </div>
+        </div>
+
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.compName" placeholder="请填写出票人全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业性质</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.companyQuality" placeholder="请填写企业性质">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业分类</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.companySort" placeholder="请填写企业分类">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">官方网站地址</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.websiteAddress" placeholder="请填写官方网站地址">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">申请银行名称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditInstitution" placeholder="请填写申请银行名称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">开户银行许可证标准号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.bankPermitNumber" placeholder="请填写开户银行许可证标准号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">开户银行许可证电子版</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.permissionNumElec" placeholder="请填写开户银行许可证电子版">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">其他材料</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.others" placeholder="请填写其他材料">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业认证申请公函</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.enterpriseCertificationationation" placeholder="请填写企业认证申请公函">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">信用额度(万元)</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.credits" placeholder="请填写信用额度(万元)">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">额度类型</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<select style="width: 100%;height: 80%;border: none" v-model="costType">-->
+              <!--<option value="">选择额度类型</option>-->
+              <!--<option value="高">高</option>-->
+              <!--<option value="低">低</option>-->
+            <!--</select>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">截止日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="userData.expiryDate" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">营业执照</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<div class="filediv">-->
+              <!--<span v-for="i in  fileName">{{i}}</span>-->
+              <!--<a v-if="fileName.length==0" style="color: deepskyblue">上传</a>-->
+              <!--<input type="file" id="file" class="file" @change="getFile">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">营业执照注册号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<div class="filediv">-->
+              <!--<span v-for="i in  fileName1">{{i}}</span>-->
+              <!--<a v-if="fileName1.length==0" style="color: deepskyblue">上传</a>-->
+              <!--<input type="file" id="file1" class="file" @change="getFile1">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="bottomButt" >
           <button class="myButtOne" @click="permission">审批</button>
           <button class="myButtTwo" @click="userReject">驳回</button>
         </div>
       </div>
       <div class="content" v-if="title=='授信失败—未结发票'">
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">购方全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.compName" placeholder="请填写购方全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">卖方全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditInstitution" placeholder="请填写卖方全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">购方纳税人识别号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.buyerTax" placeholder="请填写购方纳税人识别号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">卖方纳税人识别号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.sellerTax" placeholder="请填写卖方纳税人识别号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">购方开户行账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.buyerAccount" placeholder="请填写购方开户行账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">卖方开户行账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.sellerAccount" placeholder="请填写卖方开户行账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">发票号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.invoiceNo" placeholder="请填写发票号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">发票代码</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.invoiceCode" placeholder="请填写发票代码">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">不含税金额</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.totalPrice" placeholder="请填写不含税金额">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">票面总金额</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.credits" placeholder="请填写票面总金额">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">开票日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="userData.makeInvoiceTime" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">截止日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="userData.expiryDate" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">备注</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.remark" placeholder="请填写备注">-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="loopHead">
           <div class="loopHeadP">购方全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerName" placeholder="请填写购方全称">
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerName" placeholder="请填写卖方全称">
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
-          <div class="loopHeadP">购方纳税人识别号</div>
+          <div class="loopHeadP">购房纳税人识别号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerCode" placeholder="请填写购方纳税人识别号">
+            {{userData.buyerTax}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方纳税人识别号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerCode" placeholder="请填写卖方纳税人识别号">
+            {{userData.sellerTax}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">购方开户行账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.buyerBank" placeholder="请填写购方开户行账号">
+            {{userData.buyerAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">卖方开户行账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.sellerBank" placeholder="请填写卖方开户行账号">
+            {{userData.sellerAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.code" placeholder="请填写发票号">
+            {{userData.invoiceNo}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">发票代码</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.computerCode" placeholder="请填写发票代码">
+            {{userData.invoiceCode}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">不含税金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.cost" placeholder="请填写不含税金额">
+            {{userData.totalPrice}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票面总金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.totalCost" placeholder="请填写票面总金额">
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">开票日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="startTime" style="text-align: right"></yd-datetime>
+            {{userData.makeInvoiceTime}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.tips" placeholder="请填写备注">
+            {{userData.remark}}
           </div>
         </div>
       </div>
       <div class="content" v-if="title=='授信失败—承兑发票'">
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.completeName" placeholder="请填写出票人全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.account" placeholder="请填写出票人账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">出票人开户银行</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.bank" placeholder="请填写出票人开户银行">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.userCompleteName" placeholder="请填写承兑人全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人开户行行号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.userBank" placeholder="请填写承兑人开户行行号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人账号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.userAccount" placeholder="请填写承兑人账号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">承兑人开户行名称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.userBankName" placeholder="请填写承兑人开户行名称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">票据金额</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.ticketCost" placeholder="请填写票据金额">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">截止日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">备注</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.tips" placeholder="请填写备注">-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="loopHead">
           <div class="loopHeadP">出票人全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.completeName" placeholder="请填写出票人全称">
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.account" placeholder="请填写出票人账号">
+            {{userData.account}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">出票人开户银行</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.bank" placeholder="请填写出票人开户银行">
+            {{userData.openBank}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userCompleteName" placeholder="请填写承兑人全称">
+            {{userData.applicant}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行行号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userBank" placeholder="请填写承兑人开户行行号">
+            {{userData.creditBankNo}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人账号</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userAccount" placeholder="请填写承兑人账号">
+            {{userData.creditAccount}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">承兑人开户行名称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.userBankName" placeholder="请填写承兑人开户行名称">
+            {{userData.creditInstitution}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">票据金额</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.ticketCost" placeholder="请填写票据金额">
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">备注</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.tips" placeholder="请填写备注">
+            {{userData.remark}}
           </div>
         </div>
       </div>
@@ -632,99 +931,184 @@
         <div class="loopHead">
           <div class="loopHeadP">企业全称</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companyName" placeholder="请填写出票人全称">
+            {{userData.compName}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业性质</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companyProperty" placeholder="请填写出票人全称">
+            {{userData.companyQuality}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">企业分类</div>
           <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.companySort" placeholder="请填写出票人全称">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">官方网站地址</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.website" placeholder="请填写官方网站地址">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">申请银行名称</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.applyBank" placeholder="请填写申请银行名称">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">开户银行许可证标准号</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.permissionNum" placeholder="请填写开户银行许可证标准号">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">开户银行许可证电子版</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.permissionNumElec" placeholder="请填写开户银行许可证电子版">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">其他材料</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.others" placeholder="请填写其他材料">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">企业认证申请公函</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.commit" placeholder="请填写企业认证申请公函">
-          </div>
-        </div>
-        <div class="loopHead">
-          <div class="loopHeadP">信用额度(万元)</div>
-          <div class="loopHeadM">
-            <input  class="addCreditInput" v-model="userData.credit" placeholder="请填写信用额度(万元)">
+            {{userData.companySort}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">额度类型</div>
           <div class="loopHeadM">
-            <select style="width: 100%;height: 80%;border: none" v-model="costType">
-              <option value="">选择额度类型</option>
-              <option value="高">高</option>
-              <option value="低">低</option>
-            </select>
+            高额
           </div>
-
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">官方网站地址</div>
+          <div class="loopHeadM">
+            {{userData.websiteAddress}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">申请银行名称</div>
+          <div class="loopHeadM">
+            {{userData.creditInstitution}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">开户银行许可证标准号</div>
+          <div class="loopHeadM">
+            {{userData.bankPermitNumber}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">开户银行许可证电子版</div>
+          <div class="loopHeadM">
+            51542515215
+          </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">截止日期</div>
           <div class="loopHeadM">
-            <yd-datetime type="date" v-model="endTime" style="text-align: right"></yd-datetime>
+            {{userData.expiryDate}}
           </div>
         </div>
         <div class="loopHead">
-          <div class="loopHeadP">营业执照</div>
+          <div class="loopHeadP">其他材料</div>
           <div class="loopHeadM">
-            <span style="color: deepskyblue;">查看</span>
-            <!--<div class="filediv">-->
-              <!--<span v-for="i in  fileName">{{i}}</span>-->
-              <!--<a v-if="fileName.length==0">选择文件</a>-->
-              <!--<input type="file" id="file1" class="file" @change="getFile">-->
-            <!--</div>-->
+            无
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">企业认证申请公函</div>
+          <div class="loopHeadM">
+            {{userData.enterpriseCertificationationation}}
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">信用额度(万元)</div>
+          <div class="loopHeadM">
+            {{userData.credits}}
           </div>
         </div>
         <div class="loopHead">
           <div class="loopHeadP">营业执照注册号</div>
           <div class="loopHeadM">
-            <span style="color: deepskyblue;">查看</span>
-            <!--<input  class="addCreditInput" v-model="userData.registerNum" placeholder="请填写营业执照注册号">-->
+            {{userData.businessLicenseNumber}}
+            <!--<span style="color: deepskyblue">查看</span>-->
+          </div>
+        </div>
+        <div class="loopHead">
+          <div class="loopHeadP">营业执照</div>
+          <div class="loopHeadM">
+            <span style="color: deepskyblue">查看</span>
           </div>
         </div>
 
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业全称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.compName" placeholder="请填写企业全称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业性质</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.companyQuality" placeholder="请填写企业性质">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业分类</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.companySort" placeholder="请填写企业分类">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">官方网站地址</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.websiteAddress" placeholder="请填写官方网站地址">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">申请银行名称</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.creditInstitution" placeholder="请填写申请银行名称">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">开户银行许可证标准号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.bankPermitNumber" placeholder="请填写开户银行许可证标准号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">开户银行许可证电子版</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.permissionNumElec" placeholder="请填写开户银行许可证电子版">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">其他材料</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.others" placeholder="请填写其他材料">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">企业认证申请公函</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.enterpriseCertificationationation" placeholder="请填写企业认证申请公函">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">信用额度(万元)</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<input  class="addCreditInput" v-model="userData.credits" placeholder="请填写信用额度(万元)">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">额度类型</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<select style="width: 100%;height: 80%;border: none" v-model="costType">-->
+              <!--<option value="">选择额度类型</option>-->
+              <!--<option value="高">高</option>-->
+              <!--<option value="低">低</option>-->
+            <!--</select>-->
+          <!--</div>-->
+
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">截止日期</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<yd-datetime type="date" v-model="userData.expiryDate" style="text-align: right"></yd-datetime>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">营业执照注册号</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--&lt;!&ndash;<span style="color: deepskyblue;">查看</span>&ndash;&gt;-->
+            <!--<input  class="addCreditInput" v-model="userData.businessLicenseNumber" placeholder="请填写营业执照注册号">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="loopHead">-->
+          <!--<div class="loopHeadP">营业执照</div>-->
+          <!--<div class="loopHeadM">-->
+            <!--<span style="color: deepskyblue;">查看</span>-->
+            <!--&lt;!&ndash;<div class="filediv">&ndash;&gt;-->
+              <!--&lt;!&ndash;<span v-for="i in  fileName">{{i}}</span>&ndash;&gt;-->
+              <!--&lt;!&ndash;<a v-if="fileName.length==0">选择文件</a>&ndash;&gt;-->
+              <!--&lt;!&ndash;<input type="file" id="file1" class="file" @change="getFile">&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
 </template>
@@ -749,19 +1133,58 @@
         },
         mounted() {
           this.userData=this.$route.query.item;
+          switch (this.userData.companyQuality)
+          {
+              case '1':
+              this.userData.companyQuality='国有';
+                break;
+            case '2':
+              this.userData.companyQuality='合作';
+              break;
+            case '3':
+              this.userData.companyQuality='合资';
+              break;
+            case '4':
+              this.userData.companyQuality='独资';
+              break;
+            case '5':
+              this.userData.companyQuality='集体';
+              break;
+            case '6':
+              this.userData.companyQuality='私营';
+              break;
+            case '7':
+              this.userData.companyQuality='个体工商户';
+              break;
+          }
+          switch (this.userData.companySort)
+          {
+            case '0':
+              this.userData.companySort='有限责任公司';
+              break;
+            case '1':
+              this.userData.companySort='国有独资公司';
+              break;
+            case '2':
+              this.userData.companySort='股份有限公司';
+              break;
+          }
           if(this.$route.query.type===0){
-            this.type='已授信'
-          }else if(this.$route.query.type===1){
             this.type='待授信'
+          }else if(this.$route.query.type===1){
+            this.type='已授信'
           }else{
             this.type='授信失败'
           }
-          this.title=this.type+'—'+this.userData.type;
+          this.title=this.type+'—'+this.userData.busiType;
         },
         methods: {
-          save(){
-            console.log(this.userData.type)
+          goback(){
+            this.$router.go(-1)
           },
+//          save(){
+//            console.log(this.userData.type)
+//          },
           getFile:function () {
             this.fileName=[];
             var file=document.getElementById("file").files[0];
@@ -775,22 +1198,70 @@
             this.fileName1.push(file.name);
           },
           permission(){
-            this.$dialog.confirm({
-              title: '温馨提示',
-              mes: '审批成功！',
-              opts: () => {
-                this.$router.push({path:'/companyCredit'})
+            let vm = this;
+            let url='/clcp/appCreditApi/status';
+            let params = {
+              id:this.userData.id,
+              creditStatus:1,
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId": localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'post',url,JSON.stringify(params),function (res) {
+              console.log(res);
+              if(res.statusCode == 200){
+                vm.$dialog.confirm({
+                  title: '温馨提示',
+                  mes: '审批成功！',
+                  opts: () => {
+                    vm.$router.push({path:'/companyCredit'})
+                  }
+                });
+              }else {
+                vm.$dialog.toast({
+                  mes: '提交失败',
+                  timeout: 1500
+                });
               }
-            });
+            })
           },
           userReject(){
-            this.$dialog.confirm({
-              title: '温馨提示',
-              mes: '已驳回',
-              opts: () => {
-                this.$router.push({path:'/companyCredit'})
+            let vm = this;
+            let url='/clcp/appCreditApi/status';
+            let params = {
+              id:this.userData.id,
+              creditStatus:2,
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId": localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'post',url,JSON.stringify(params),function (res) {
+              console.log(res);
+              if(res.statusCode == 200){
+                vm.$dialog.confirm({
+                  title: '温馨提示',
+                  mes: '驳回成功！',
+                  opts: () => {
+                    vm.$router.push({path:'/companyCredit'})
+                  }
+                });
+              }else {
+                vm.$dialog.toast({
+                  mes: '提交失败',
+                  timeout: 1500
+                });
               }
-            });
+            })
           },
           save(){
             this.$dialog.confirm({

@@ -1,16 +1,16 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
     <yd-navbar title="金票收支" bgcolor="#789CF8" color="#FFFFFF">
-      <router-link  slot="left" to="/appliance">
+      <div slot="left" @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
-      </router-link>
+      </div>
       <yd-icon name="search" size="25px" color="#FE8E18" slot="right" @click.native="openAdd"></yd-icon>
     </yd-navbar>
     <div class="head" style="z-index: 9999"></div>
 
     <div class="card">
       <div class="selectItem"  >
-        <span :class="{'active': type==0}" @click="changeStatus(0)">代签收金票</span>
+        <span :class="{'active': type==0}" @click="changeStatus(0)">待签收金票</span>
       </div>
       <div class="selectItem" >
         <span :class="{'active': type==1}" @click="changeStatus(1)">可用金票</span>
@@ -28,22 +28,31 @@
         <span :class="{'active': type==5}" @click="changeStatus(5)">已驳回金票</span>
       </div>
     </div>
-    <div class="content" >
-      <div class="listBorder">
-        <yd-cell-group v-for="i,index in list" @click.native="goDetail(i)" :key="index">
-          <yd-cell-item arrow>
-            <div slot="left" class="leftItem">
-              <div class="itemName"><span >金票编号</span><span class="itemRight">{{i.type}}啊啊啊</span></div>
-              <div class="itemName"><span >接收方</span><span class="itemRight">{{i.seller}}啊啊啊</span></div>
-              <div class="itemName"><span >开立金额(元)</span><span class="itemRight">{{i.apply}}啊啊啊</span></div>
-              <div class="itemName"><span >驳回日期</span><span class="itemRight">{{i.cost}}啊啊啊</span></div>
+    <!--<div class="content" :class="{ifbottom:type==1}">-->
+      <div class="listBorder"  :class="{ifbottom:type==1}">
+        <yd-infinitescroll :callback="loadList1" ref="infinitescrollDemo" >
+          <yd-cell-group v-for="i,index in list" @click.native="goDetail(i)" :key="index" slot="list" >
+            <div style="display: flex;padding-left: 0.44rem;height: 0.8rem;line-height: 0.8rem;border-bottom: 1px solid #eeeeee; font-size: 0.28rem;" id="checkboxBor" v-if="type==1">
+              <yd-checkbox v-model="i.check" shape="circle" onClick="event.cancelBubble = true" v-if="type==1"  ></yd-checkbox>
+              <span >金票编号</span>
+              <span class="itemRight" style="margin-left: 0.5rem">{{i.jinquanCode}}</span>
             </div>
-            <div slot="right"></div>
-          </yd-cell-item>
-        </yd-cell-group>
+            <yd-cell-item arrow>
+              <div slot="left" class="leftItem">
+                <div class="itemName" v-if="type!=1"><span >金票编号</span><span class="itemRight" style="margin-left: 1rem">{{i.jinquanCode}}</span></div>
+                <div class="itemName"><span >接收方</span><span class="itemRight" style="margin-left: 1.3rem">{{i.receiver}}</span></div>
+                <div class="itemName"><span >开立金额(元)</span><span class="itemRight" style="margin-left: 0.55rem">{{i.amount}}</span></div>
+                <div class="itemName"><span >承诺付款日</span><span class="itemRight" style="margin-left: 0.7rem">{{i.committedPaydate}}</span></div>
+              </div>
+              <div slot="right"></div>
+            </yd-cell-item>
+          </yd-cell-group>
+          <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
+          <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
+        </yd-infinitescroll>
       </div>
 
-    </div >
+    <!--</div >-->
     <!--<div class="content" v-if="type==1">-->
     <!--<div class="listBorder">-->
     <!--<yd-cell-group v-for="i in list2" >-->
@@ -59,20 +68,25 @@
     <!--</div>-->
 
     <!--</div >-->
-    <div class="popover" v-if="showTool">
-      <div class="item" style="border-bottom: 1px solid #4A4A4A " @click="add(0)">
-        <img src="../../../../../assets/iconImg/add.png" class="rightIcon">
-        未结发票
-      </div>
-      <div class="item" @click="add(1)">
-        <img src="../../../../../assets/iconImg/add.png" class="rightIcon">
-        承兑发票
-      </div>
-      <div class="item" @click="add(2)">
-        <img src="../../../../../assets/iconImg/add.png" class="rightIcon">
-        银行授信
-      </div>
+    <!--<div class="popover" v-if="showTool">-->
+      <!--<div class="item" style="border-bottom: 1px solid #4A4A4A " @click="add(0)">-->
+        <!--<img src="../../../../../assets/iconImg/add.png" class="rightIcon">-->
+        <!--未结发票-->
+      <!--</div>-->
+      <!--<div class="item" @click="add(1)">-->
+        <!--<img src="../../../../../assets/iconImg/add.png" class="rightIcon">-->
+        <!--承兑发票-->
+      <!--</div>-->
+      <!--<div class="item" @click="add(2)">-->
+        <!--<img src="../../../../../assets/iconImg/add.png" class="rightIcon">-->
+        <!--银行授信-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="bottom" v-if="type==1">
+      <span style="margin-left: 37.066vw;margin-right: 2.933vw">已选择 {{totalSelect}} 条</span>
+      <div class="submit" @click="submit">转让</div>
     </div>
+
   </div>
 </template>
 
@@ -80,41 +94,124 @@
     export default {
         data: function () {
             return {
+              pageNum:1,
+              pageSize:4,
+              totalSelect:0,
               type:0,
               list:[],
-              list1:[1,2,3,4]
+              list1:[{type:1},{type:2},{type:3},{type:4}],
+              sendList:[]
             }
         },
         created() {
 
         },
         mounted() {
-           this.list=this.list1
+           this.getData(3)
         },
         methods: {
+          getData(status){
+            let vm = this;
+            let url='clcp/app/receive/gold/list?status='+status+"&pageSize="+this.pageSize+"&pageNum="+this.pageNum;
+            let params={
+            };
+            let heads={
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "X-TenantId": localStorage.getItem("tenantId"),
+              "X-Logined-Sign": localStorage.getItem("username"),
+              "Authorization": 'Bearer '+localStorage.getItem("token"),
+              "Prefer-Lang": "zh-CN"
+            };
+            vm.api(vm,heads,'get',url,params,function (res) {
+              console.log(res);
+              for(var i in res.data){
+                vm.list.push(res.data[i]);
+              }
+              console.log(vm.list.length)
+              console.log(res.total)
+              if(vm.list.length>=res.total){
+                vm.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
+                return;
+              }
+              vm.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
+              vm.pageNum++
+            })
+          },
           changeStatus(type){
+            this.list=[]
+            var status;
             if(type===0){
               this.type=0;
-              this.list=this.list1
+              status=3
             }else if(type===1){
               this.type=1;
-              this.list=this.list2
+              status=2
             }else if(type===2){
               this.type=2;
-              this.list=this.list3
+              status=0
             }else if(type===3){
               this.type=3;
-              this.list=this.list2
+              status=1
             }else if(type===4){
               this.type=4;
-              this.list=this.list2
+              status=5
             }else{
               this.type=5;
-              this.list=this.list3
+              status=4
             }
+            this.getData(status)
           },
           goDetail(i){
-            this.$router.push({path:'/ticketDetails'})
+            localStorage.setItem("type",this.type)
+            localStorage.setItem("data",JSON.stringify(i))
+            this.$router.push(
+              {
+                path:'/ticketDetails',
+                query:{
+                  type:this.type,
+                  data:i
+                }
+              })
+          },
+          submit(){
+            for(var i in this.list){
+              if(this.list[i].check){
+                this.sendList.push(this.list[i])
+              }
+            }
+            if(this.sendList.length==0){
+              this.$dialog.confirm({
+                title: '温馨提示',
+                mes: '请选择金票进行支付!',
+                opts: () => {
+                }
+              });
+            }else if(this.sendList.length>1){
+              this.$dialog.confirm({
+                title: '温馨提示',
+                mes: '只能选择一张金票,请重新选择',
+                opts: () => {
+                  for(var i in this.list) {
+                    this.list[i].check=false
+                  }
+                  this.sendList=[]
+                }
+              });
+            }else{
+              this.$router.push(
+                {
+                  path:'/payment',
+                  query:this.sendList
+                });
+              this.sendList=[]
+            }
+          },
+          goback(){
+            this.$router.push({path:'/indexpage'})
+          },
+          loadList1(){
+
           }
         }
 
@@ -122,6 +219,11 @@
 </script>
 
 <style scoped>
+
+  .itemName>div{
+    display: flex;
+    align-items: center;
+  }
   .itemName:nth-child(1)>span:nth-child(2) {
     margin-left: 1rem
   }
@@ -156,6 +258,7 @@
   }
   .leftItem{
     padding: 0.2rem;
+    padding-top: 0.1rem;
     font-size: 0.28rem;
     font-family: PingFangSC-Regular
   }
@@ -204,19 +307,38 @@
     border-bottom: 5px solid #FFAF00  ;
   }
   .content{
-    height: calc(100% - 2.32rem);
+    /*height: calc(100% - 2.32rem);*/
+    /*width: 100%;*/
+    /*overflow: scroll;*/
+    /*z-index: 5;*/
+    /*transition: all 0.6s linear;*/
+    /*margin-top: -0.8rem;*/
+  }
+  .ifbottom{
+    height: calc(100% - 3.32rem);
     width: 100%;
     overflow: scroll;
     z-index: 5;
     transition: all 0.6s linear;
-    /*margin-top: -0.8rem;*/
   }
   .listBorder{
-    margin-top: 1rem;
-    margin-left: 5%;
-    margin-right: 5%;
+    /*margin-top: 1rem;*/
+    /*margin-left: 5%;*/
+    /*margin-right: 5%;*/
     /*overflow: scroll;*/
     /*height: calc(100% - 1rem);*/
+    position: absolute;
+    bottom: 0;
+    top:2.32rem;
+    left: 0;
+    /*height:100%;*/
+    padding-top: 1rem;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: calc(100% - 2.32rem);
+    width: 100%;
+    overflow: scroll;
+    z-index: 5;
   }
   .listBorder .yd-cell-box{
     margin-bottom: 0.5rem;
@@ -254,5 +376,30 @@
   }
   .yd-navbar-item span,i{
     color: white !important;
+  }
+  .bottom{
+    font-size:3.2vw ;
+    color: #8A8A8A;
+    border-top: 1px solid #eeeeee;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    justify-content:flex-end;
+    padding-right: 0.5rem;
+    align-items: center;
+    background-color: white;
+    z-index:99999;
+  }
+  .submit{
+    height: 0.6rem;
+    border-radius: 8vw;
+    background-color:#FF7F39;
+    width: 1.4rem;
+    color: white;
+    font-size:3.733vw;
+    line-height: 9vw;
+    text-align: center
   }
 </style>

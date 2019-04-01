@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style>
+
 #app{
   width: 100%;
   height: 100%;
@@ -81,6 +82,13 @@ export default {
 .you .yd-cell{
   margin-left: 0;
 }
+#me .item{
+box-shadow: none
+}
+#login .content{
+  margin-top: 0.2rem;
+  position: static;
+}
   .me .yd-cell-item:not(:last-child):after{
     height:0;
   }
@@ -101,4 +109,7 @@ export default {
   #myGrid .yd-grids-5:before{
     height: 0;
   }
+  /*#main .yd-navbar-item span, i{*/
+    /*color: inherit !important;*/
+  /*}*/
 </style>

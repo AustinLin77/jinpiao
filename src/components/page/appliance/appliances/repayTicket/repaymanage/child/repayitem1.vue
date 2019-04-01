@@ -90,7 +90,7 @@
     },
     created() {
       this.type = this.$route.query.type;
-      this.ticketitem = JSON.parse(localStorage.getItem("ticketitem"));
+      this.ticketitem = JSON.parse(localStorage.getItem("repayitem"));
       if(this.type == 1){
         this.title = "撤销金票"
       }else if(this.type == 0){

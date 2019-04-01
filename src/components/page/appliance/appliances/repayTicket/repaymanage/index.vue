@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;overflow: hidden" id="company">
-    <yd-navbar title="金票审核" bgcolor="#789CF8" color="#FFFFFF">
+    <yd-navbar title="还款管理" bgcolor="#789CF8" color="#FFFFFF">
       <div  slot="left"  @click="goback">
         <yd-navbar-back-icon ></yd-navbar-back-icon>
       </div>
@@ -9,16 +9,16 @@
     <div class="head" style="z-index: 9999"></div>
     <div class="card">
       <div class="selectItem"  >
-        <span :class="{'active': type==0}"  @click="changeStatus(0)">已开立金票</span>
+        <span :class="{'active': type==1}"  @click="changeStatus(1)">待还款</span>
       </div>
       <div class="selectItem" >
-        <span :class="{'active': type==1}" @click="changeStatus(1)">已复审金票</span>
+        <span :class="{'active': type==2}" @click="changeStatus(2)">还款审批</span>
       </div>
       <div class="selectItem" >
-        <span :class="{'active': type==2}" @click="changeStatus(2)">已驳回金票</span>
+        <span :class="{'active': type==3}" @click="changeStatus(3)">已还款</span>
       </div>
       <div class="selectItem" >
-        <span :class="{'active': type==3}" @click="changeStatus(3)">已撤销金票</span>
+        <span :class="{'active': type==4}" @click="changeStatus(4)">需垫付</span>
       </div>
     </div>
     <div class="content" >
@@ -28,10 +28,10 @@
           <yd-cell-group v-for="(i,index) in list" @click.native="goDetail(i)" :key="index"  slot="list">
             <yd-cell-item arrow>
               <div slot="left" style="padding: 0.2rem;font-size: 0.28rem">
-                <div class="itemName"><span >金票编号</span><span >{{i.jinquanCode}}</span></div>
-                <div class="itemName"><span >接受方</span><span >{{i.receiver}}</span></div>
-                <div class="itemName"><span >金额（元）</span><span >{{i.openAmount}}</span></div>
-                <div class="itemName"><span >承诺付款日</span><span >{{i.committedPaydate}}</span></div>
+                <div class="itemName"><span >金票编号</span><span >{{i.billCode}}</span></div>
+                <div class="itemName"><span >接受方</span><span >{{i.auditor}}</span></div>
+                <div class="itemName"><span >还款金额（元）</span><span >{{i.actualPay}}</span></div>
+                <div class="itemName"><span >承诺付款日</span><span >{{i.finalRepaymentDate}}</span></div>
               </div>
               <div slot="right"></div>
             </yd-cell-item>
@@ -55,7 +55,7 @@
   export default {
     data: function () {
       return {
-        type:0,
+        type:1,
         list:[],
         searchshow:false,
         searchcontent:"",
@@ -65,14 +65,14 @@
       }
     },
     created() {
-//      this.list=[1,2,3,4]
+//      $("#div:")
     },
     mounted() {
-        this.getData();
+      this.getData();
     },
     methods: {
       goback(){
-        this.$router.push({path:'/indexpage'})
+        this.$router.go(-1);
       },
       //改变操作用户状态
       changeStatus(type){
@@ -89,7 +89,7 @@
         if(this.receiver == ""){
           this.receiver = "sss"
         }
-        let url='clcp/app/open/gold/list?status='+vm.type+"&pageSize="+this.pageSize+
+        let url='clcp/appCreditApi/clcpRepayment/get?type='+vm.type+"&pageSize="+this.pageSize+
           "&pageNum="+this.pageNum
         let params={
         };
@@ -103,10 +103,10 @@
         };
         vm.api(vm,heads,'get',url,params,function (res) {
           console.log(res);
-          for(var i in res.data){
-            vm.list.push(res.data[i]);
+          for(var i in res.data.list){
+            vm.list.push(res.data.list[i]);
           }
-          console.log(vm.list.length)
+//          console.log(vm.list.length)
           console.log(res.total)
           if(vm.list.length>=res.total){
             vm.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
@@ -122,8 +122,8 @@
       //点击进入详情页面
       goDetail(item){
         console.log(item);
-        localStorage.setItem("ticketitem",JSON.stringify(item));
-        this.$router.push({path:'/ticketitem', query:{type:this.type}});
+        localStorage.setItem("repayitem",JSON.stringify(item));
+        this.$router.push({path:'/repayitem', query:{type:this.type}});
       },
       loadList(){
         this.getData();
@@ -181,7 +181,7 @@
     display: flex;
   }
   .itemName>span:first-child{
-    width: 1.6rem;
+    width: 2rem;
     color: #333;
   }
   .itemName>span:last-child{

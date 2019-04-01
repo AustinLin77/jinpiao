@@ -49,7 +49,7 @@
     </div>
 </template>
 
-<script>
+<script scoped >
     export default {
         data: function () {
             return {
@@ -131,7 +131,7 @@
 
     }
 </script>
-<style>
+<style scoped>
   .yd-navbar-item span,i{
     color: white !important;
   }
